@@ -20,6 +20,7 @@ function App() {
       <Asset />
     </LivepeerConfig>
   );
+  
 }
 
 export default App;
