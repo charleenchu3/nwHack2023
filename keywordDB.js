@@ -10,10 +10,10 @@ const keywordList = ["Friend","Space","Sunshine","Present","Smile",
 ,"Blue","Parents","Train","Candle"]
 
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+function getPromptWord(max) {
+    var randNum = Math.floor(Math.random() * max);
+    return keywordList[randNum-1];
 }
-var promptWord = keywordList[1];
 
-console.log(valueAtIndex1);
-console.log(keywordList.length -1);
+console.log(getPromptWord(keywordList.length))
+
