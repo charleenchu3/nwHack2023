@@ -1,11 +1,13 @@
 import { Player, useAssetMetrics, useCreateAsset } from '@livepeer/react';
-import React from 'react';
-
-import { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { Button } from "@nextui-org/react";
+import { Input } from '@nextui-org/react';
+import './App.css'
 
 export const Asset = () => {
     const [video, setVideo] = useState();
+    const [uploadedVideos, setUploadedVideos] = useState([])
     const {
         mutate: createAsset,
         data: asset,
@@ -38,6 +40,12 @@ export const Asset = () => {
         onDrop,
     });
 
+    useEffect(() => {
+        // if (status === 'success') setUploadedVideos(() => prev.push(asset))
+        //}, [status])
+        if (status === 'success') setUploadedVideos(prev => [...prev, asset])
+    }, [status])
+
     const isLoading = useMemo(
         () =>
             status === 'loading' ||
@@ -60,38 +68,35 @@ export const Asset = () => {
     );
 
     return (
-        <div>
-            {!asset && (
+        <div style={{ width: '500px', margin: 'auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '70% 25%', columnGap: '5px', paddingRight: "20px", marginBottom: "20px" }}>
                 <div {...getRootProps()}>
-                    <input type="file" onChange={(e) => setVideo(e.target.files[0])} />
-
+                    <Input style={{ paddingTop: '10px' }} type="file" onChange={(e) => setVideo(e.target.files[0])} />
                     {error?.message && <p>{error.message}</p>}
                 </div>
-            )}
+                <Button
+                    onClick={() => {
+                        createAsset?.();
+                    }}
+                    disabled={isLoading || !createAsset}
+                >
+                    Upload
+                </Button>
+                <p style={{ paddingLeft: '10px' }}>Select a video file to upload</p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', justifyContent: 'center' }}>
+                {uploadedVideos && uploadedVideos.map((video) =>
+                    <Player title={video[0].name} playbackId={video[0].playbackId} />
+                )}
+            </div>
 
-            {asset?.[0]?.playbackId && (
-                <Player title={asset[0].name} playbackId={asset[0].playbackId} />
-            )}
 
-            <div>
-                {metrics?.metrics?.[0] && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+                {video && <p>{video.name}</p>}{metrics?.metrics?.[0] && (
                     <p>Views: {metrics?.metrics?.[0]?.startViews}</p>
                 )}
-
-                {video ? <p>{video.name}</p> : <p>Select a video file to upload.</p>}
-
                 {progressFormatted && <p>{progressFormatted}</p>}
 
-                {!asset?.[0].id && (
-                    <button
-                        onClick={() => {
-                            createAsset?.();
-                        }}
-                        disabled={isLoading || !createAsset}
-                    >
-                        Upload
-                    </button>
-                )}
             </div>
         </div>
     );

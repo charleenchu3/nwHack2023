@@ -16,10 +16,12 @@ const livepeerClient = createReactClient({
 function App() {
   return (
     <LivepeerConfig client={livepeerClient}>
-      hi
-      <Asset />
+      <h1>Chit Chat</h1>
+      <NextUIProvider>
+        <Asset />
+      </NextUIProvider>
     </LivepeerConfig>
-  );
+  )
 }
 
 export default App;

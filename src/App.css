@@ -32,7 +32,27 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+h1 {
+  margin: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+Button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+Input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
