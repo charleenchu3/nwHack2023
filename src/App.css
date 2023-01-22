@@ -56,3 +56,10 @@ Input {
   align-items: center;
   justify-content: center;
 }
+
+h2 {
+  margin: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

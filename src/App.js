@@ -5,7 +5,8 @@ import {
 } from '@livepeer/react';
 import * as React from 'react';
 import { Asset } from './CreateAndViewAsset';
-
+import { NextUIProvider } from '@nextui-org/react';
+import {keywordBlock} from './Keywords';
 
 const livepeerClient = createReactClient({
   provider: studioProvider({
@@ -17,6 +18,8 @@ function App() {
   return (
     <LivepeerConfig client={livepeerClient}>
       <h1>Chit Chat</h1>
+      <h2>Today's topic: Hometown Favorites</h2>
+      <keywordBlock />
       <NextUIProvider>
         <Asset />
       </NextUIProvider>
